@@ -1,0 +1,101 @@
+<!DOCTYPE html >
+<html>
+
+	<head>
+		<meta charset="utf-8" name="apple-mobile-web-app-capable" content="yes"/>
+		<title>Match Visualizer</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen">	
+		<script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#sm").change(function () {
+          			var matchID=(this.options[this.selectedIndex].value);
+					$.ajax({
+						type:"POST",
+						url: "php/getMatchData.php",
+						data:({mid:matchID}),
+						dataType:"xml",
+						success: function(xml) {
+							alert("good");
+						}					              	
+    				});
+    			});
+        	});
+	    </script>
+	</head>
+	
+	<body>
+			<div id="header"><span>2.5.11 ARSENAL (4) VS. NEWCASTLE (0)</span></div>	
+			<div id="wrapper">
+			    <canvas onclick ="draw()" id="canvas">
+				</canvas>
+				
+				<div id="filters">
+				
+				<p  style="padding-top:7px;"class = "select">SELECT A MATCH</p>
+
+				<select id="sm">
+					<option>Select</option>
+					<option value="1">Newcastle vs Arsenal(Feb 5, 2011)</option>
+					<option value="2">Arsenal vs Blackburn Rovers (Feb 5, 2011)</option>
+				</select>
+
+				<p class ="select">SELECT A TEAM</p>
+
+				<select name ="team" disabled>
+					<option>Select</option>
+					<option id="st1">Arsenal</option>
+					<option>Newcastle</option>					
+				</select>
+
+				<p class="select">SELECT A PLAYER</p>
+
+				<select size="11">
+					<option>All</option>
+					<option>Arsenal</option>
+					<option>Fabregas</option>
+					<option>Newcastle</option>					
+					<option>Arsenal</option>
+					<option>Fabregas</option>
+					<option>Newcastle</option>
+					<option>Arsenal</option>
+					<option>Fabregas</option>
+					<option>Newcastle</option>					
+					<option>Arsenal</option>
+					<option>Fabregas</option>
+					<option>Newcastle</option>										
+				</select>
+				
+				<p class="select">SELECT AN EVENT</p>
+				<select>
+					<option>Select</option>
+					<option>Passes</option>
+					<option>Goals</option>
+					<option>Shots</option>								
+				</select>
+				<br/>
+				<br/>
+				<select size="6">
+					<option>All</option>
+					<option>Successful</option>
+					<option>Unsuccessful</option>
+				</select>
+
+				<!-- end #filters --></div>
+			<!-- end #wrapper --></div>
+			
+			<div id="foot">
+				<canvas id="timeline">
+				
+				</canvas>
+				<div id="summary">
+					<p>SUMMARY</p>
+					<p>Newcastle United 4 (0)</p>
+					<span>Barton (pen) 68, (pen) 83, Best 75, Tiote 87</span>
+				
+					<p>Arsenal 4 (4)</p>
+					<span>Walcott 1, Djourou 3, van Persie 10, 26</span>
+				<!-- end #summary --></div>
+			<!-- end #foot --></div>
+	</body>
+</html>

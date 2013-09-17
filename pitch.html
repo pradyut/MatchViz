@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+
+<script type="text/javascript">
+var insert = 0
+var x1
+var y1
+
+function point_it(event){
+	
+	pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("pointer_div").offsetLeft;
+	pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("pointer_div").offsetTop;
+	document.getElementById("x").value = pos_x;
+	document.getElementById("y").value = pos_y;
+	
+	if(pos_x>=90 && pos_x <=415 && pos_y>=56 && pos_y<=536){
+		if(insert==1){
+			append(x1,y1,pos_x, pos_y);
+			
+		}
+		else{
+			x1=pos_x
+			y1=pos_y
+			insert = Math.abs(insert - 1)
+		}
+	}
+}
+
+function append(x1,y1, x2, y2) {
+	var mid =document.getElementById("mid").value;
+	var min = document.getElementById("min").value;
+	var tid = document.getElementById("tid").value;
+	var p1 = document.getElementById("pid").value;
+	var s = document.getElementById("s").value;
+	var endx= 415 -91;
+	var endy= 536-56;
+	x1 = 100*(x1 - 91)/endx;
+	x2 = 100*(x2-91)/endx;
+	y1= 100*(y1 - 56)/endy;
+	y2= 100*(y2 -56)/endy;
+	
+	var f="#"+x1+"#"+y1+"#";
+	var e="#"+x2+"#"+y2+"#";
+	query = " ('"+mid+"','"+min+"','"+tid+"','"+p1+"','"+s+"','"+f+"','"+e+"'),"
+	document.getElementById("string").value +=query
+	insert = Math.abs(insert - 1)
+}
+
+</script>
+</head>
+<body style="margin:0px; padding:0px;">
+<div>
+<div onmousedown="point_it(event)" id="pointer_div" style = "float:left; border: 1px solid black;margin:0px; padding:0px; background-image:url(img/soccerpitch.png) ;width:1024px;height:768px;">
+
+
+
+<!-- <embed >width="100%" height="100%" name="plugin" src="http://guardianchalkboards.jumpmediagroup.com/guardianchalkboards.swf" type="application/x-shockwave-flash"> -->
+</div>
+
+<p>You pointed on x = <input id="x" type="text" name="form_x" size="4" /> - y = <input id="y" type="text" name="form_y" size="4"/>
+</p>
+<p>Match = <input id="mid" type="text" size="4" />Minute = <input id="min" type="text" size="4" />  PlayerID = <input id="pid" type="text" size="4"/>  Success? = <input id="s" type="text" size="4"/>
+  TeamID = <input id="tid" type="text" size="4"/>
+</p>
+</div>
+
+<div style="float:left;">
+<textarea id="string" style="height:300px; width:500px;">INSERT into `plugdb_main`.`passes` (`Match_ID`, `Minute`, `Team_ID`, `Player1_ID`, `Success`, `X1Y1`, `X2Y2`) VALUES</textarea>
+</div>
+
+<br/>
+
+
+
+</body>
+</html>
+<!-- <embed onclick="point_it(event)" width="100%" height="100%" name="plugin" src="http://guardianchalkboards.jumpmediagroup.com/guardianchalkboards.swf" type="application/x-shockwave-flash"> -->

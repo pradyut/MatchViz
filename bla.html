@@ -1,0 +1,77 @@
+
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<script language="javascript">
+var optionNumber = 6; //added options start with this number
+var busy=false;
+function transfer(aList) {
+var otherList;
+var selectedOption;
+var selectedIndex;
+if (aList.options.length==0) {
+return;
+}
+if (busy) {
+return;
+}
+busy=true;
+// set the otherList variable reference
+if (aList == document.getElementById("list1")) {
+otherList=document.getElementById("list2");
+}
+else if (aList == document.getElementById("list2")) {
+otherList=document.getElementById("list1");
+}
+selectedIndex=null;
+for (i=0; i < aList.options.length; i++) {
+if (aList.options[i].selected) {
+selectedOption = aList.options[i];
+selectedIndex = i;
+}
+}
+if (selectedIndex==null) {
+busy=false;
+return;
+}
+// remove the selected item from aList
+aList.options.remove(selectedIndex);
+// add the selected item to the other list
+//alert(selectedOption.text);
+otherList.options.add(selectedOption);
+busy=false;
+}
+function addOption(aListname) {
+var aList = document.getElementById(aListname);
+var newOption = document.createElement("option");
+newOption.text = "Item" + optionNumber;
+optionNumber += 1;
+newOption.value = "optionNumber"
+aList.options.add(newOption);
+}
+</script>
+</HEAD>
+<BODY>
+<table cols="2">
+<tr><td>
+<SELECT id=list1 style="WIDTH: 132px; HEIGHT: 203px" size=2 name=list1
+onclick="transfer(this)">
+<OPTION>Item 1</OPTION>
+<OPTION>Item 2</OPTION>
+<OPTION>Item 3</OPTION>
+<OPTION>Item 4</OPTION>
+<OPTION>Item 5</OPTION>
+</SELECT></td>
+<td><SELECT id=list2
+style ="WIDTH: 140px; HEIGHT: 205px" size=2 name=list2
+onclick="transfer(this)">
+</SELECT></td></tr>
+<tr><td style="text-align:center">
+<INPUT id=button1 type=button value="Add Item" name=button1
+onclick="addOption('list1')" style="LEFT: 288px; TOP: 196px">
+</td><td style="text-align:center">
+<INPUT id=button2 type=button value="Add Item" name=button2
+onclick="addOption('list2')" style="LEFT: 288px; TOP: 196px">
+</td></tr></table>
+</BODY>
+</HTML>
